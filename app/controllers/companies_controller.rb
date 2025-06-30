@@ -3,7 +3,11 @@ class CompaniesController < ApplicationController
   layout "companies"
 
   def index
-    @companies = Company.all
+  end
+
+  def get_companies
+    companies = Company.all
+    render json: companies, status: :ok
   end
 
   def create

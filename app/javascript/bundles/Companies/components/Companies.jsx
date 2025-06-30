@@ -1,17 +1,24 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Companies = (props) => {
+function Companies() {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = () => {
+    axios.get('companies/get_companies')
+      .then(response => {
+        setCompanies(response.data)})
+  };  
 
   return (
     <div>
       Test
     </div>
   );
-};
-
-Companies.propTypes = {
-  name: PropTypes.string.isRequired,
 };
 
 export default Companies;

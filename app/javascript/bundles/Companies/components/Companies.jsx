@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddEditCompanyModal from './AddEditCompanyModal';
+import DeleteCompanyModal from './DeleteCompanyModal';
 
 function Companies() {
   const [companies, setCompanies] = useState([]);
   const [openAddCompanyModal, setOpenAddCompanyModal] = useState(false);
   const [companyToEdit, setCompanyToEdit] = useState(null);
+  const [companyToDelete, setCompanyToDelete] = useState(null);
 
   useEffect(() => {
     fetchCompanies();
@@ -20,6 +22,7 @@ function Companies() {
   function handleCloseModal() {
     setOpenAddCompanyModal(false);
     setCompanyToEdit(null);
+    setCompanyToDelete(null);
   }
 
   const handleSave = (company) => {
@@ -37,6 +40,14 @@ function Companies() {
       fetchCompanies();
       handleCloseModal();
     });
+  };
+
+  const handleDelete = (companyId) => {
+    axios.delete(`/companies/${companyId}`)
+      .then(() => {
+        fetchCompanies();
+        handleCloseModal();
+      });
   };
 
   return (
@@ -81,6 +92,7 @@ function Companies() {
                   </button>
                   <button
                     className="btn btn-sm btn-outline-danger"
+                    onClick={() => setCompanyToDelete(company)}
                   >
                     Delete
                   </button>
@@ -95,6 +107,13 @@ function Companies() {
           company={companyToEdit}
           onClose={handleCloseModal}
           onSubmit={handleSave}
+        />
+      )}
+      {companyToDelete && (
+        <DeleteCompanyModal 
+          company={companyToDelete}
+          onClose={handleCloseModal}
+          onConfirm={handleDelete}
         />
       )}
     </div>

@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: %i[ update destroy ]
+  layout "companies"
 
   def index
     @companies = Company.all

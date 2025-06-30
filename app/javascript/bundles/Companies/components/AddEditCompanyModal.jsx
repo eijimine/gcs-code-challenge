@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-function AddCompanyModal({ onClose, onSubmit }) {
+function AddEditCompanyModal({ company, onClose, onSubmit }) {
   const [name, setName] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
+  useEffect(() => {
+    if (company) {
+      setName(company.name);
+      setLatitude(company.latitude);
+      setLongitude(company.longitude);
+    }
+  }, [company]);
+
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit({
+      ...company,
       name,
       latitude,
       longitude,
@@ -19,7 +28,7 @@ function AddCompanyModal({ onClose, onSubmit }) {
       <div className="modal-dialog">
         <form className="modal-content" onSubmit={handleSubmit}>
           <div className="modal-header">
-            <h5 className="modal-title">Add Company</h5>
+            <h5 className="modal-title">{ company ? 'Edit' : 'Add' } Company</h5>
             <button className="btn-close" onClick={onClose}></button>
           </div>
           <div className="modal-body">
@@ -59,7 +68,7 @@ function AddCompanyModal({ onClose, onSubmit }) {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary">Add Company</button>
+            <button type="submit" className="btn btn-primary">{ company ? 'Save Changes' : 'Add Company' }</button>
           </div>
         </form>
       </div>
@@ -67,4 +76,4 @@ function AddCompanyModal({ onClose, onSubmit }) {
   );
 }
 
-export default AddCompanyModal;
+export default AddEditCompanyModal;

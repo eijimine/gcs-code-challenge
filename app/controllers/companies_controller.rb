@@ -7,7 +7,7 @@ class CompaniesController < ApplicationController
   end
 
   def get_companies
-    companies = Company.all
+    companies = Company.order(created_at: :desc)
     render json: companies, status: :ok
   end
 

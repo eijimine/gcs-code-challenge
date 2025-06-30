@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AddCompanyModal from './AddCompanyModal';
+import AddEditCompanyModal from './AddEditCompanyModal';
 
 function Companies() {
   const [companies, setCompanies] = useState([]);
   const [openAddCompanyModal, setOpenAddCompanyModal] = useState(false);
+  const [companyToEdit, setCompanyToEdit] = useState(null);
 
   useEffect(() => {
     fetchCompanies();
@@ -18,10 +19,14 @@ function Companies() {
 
   function handleCloseModal() {
     setOpenAddCompanyModal(false);
+    setCompanyToEdit(null);
   }
 
-  const handleCreate = (company) => {
-    axios.post('/companies', {
+  const handleSave = (company) => {
+    const method = openAddCompanyModal ? 'post' : 'patch';
+    const url = openAddCompanyModal ? '/companies' : `/companies/${company.id}`;
+
+    axios[method](url, {
       company: {
         name: company.name,
         latitude: company.latitude,
@@ -70,6 +75,7 @@ function Companies() {
                 <td className="text-center">
                   <button
                     className="btn btn-sm btn-outline-primary me-2"
+                    onClick={() => setCompanyToEdit(company)}
                   >
                     Edit
                   </button>
@@ -84,10 +90,11 @@ function Companies() {
           )}
         </tbody>
       </table>
-      {openAddCompanyModal && (
-        <AddCompanyModal
+      {(openAddCompanyModal || companyToEdit) && (
+        <AddEditCompanyModal
+          company={companyToEdit}
           onClose={handleCloseModal}
-          onSubmit={handleCreate}
+          onSubmit={handleSave}
         />
       )}
     </div>

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddEditCompanyModal from './AddEditCompanyModal';
 import DeleteCompanyModal from './DeleteCompanyModal';
+import Map from './Map';
 
-function Companies() {
+function Companies(props) {
   const [companies, setCompanies] = useState([]);
   const [openAddCompanyModal, setOpenAddCompanyModal] = useState(false);
   const [companyToEdit, setCompanyToEdit] = useState(null);
@@ -51,71 +52,77 @@ function Companies() {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="mb-0">Company List</h2>
-        <button
-          className="btn btn-primary"
-          onClick={() => setOpenAddCompanyModal(true)}
-        >
-          Add Company
-        </button>
+    <div className="container mt-5">
+      <h1 className="mb-4 text-center">Companies</h1>
+      <div className="mb-5">
+        <Map googleMapsApiKey={props.googleMapsApiKey} companies={companies} />
       </div>
-      <table className="table table-sm table-hover table-striped shadow-sm">
-        <thead className="table-light">
-          <tr>
-            <th>Company</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th className="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {companies.length === 0 ? (
+      <div className="container mt-4">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2 className="mb-0">Company List</h2>
+          <button
+            className="btn btn-primary"
+            onClick={() => setOpenAddCompanyModal(true)}
+          >
+            Add Company
+          </button>
+        </div>
+        <table className="table table-sm table-hover table-striped shadow-sm">
+          <thead className="table-light">
             <tr>
-              <td colSpan="4" className="text-center text-muted py-4">
-                No companies found.
-              </td>
+              <th>Company</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th className="text-center">Actions</th>
             </tr>
-          ) : (
-            companies.map((company) => (
-              <tr key={company.id}>
-                <td>{company.name}</td>
-                <td>{company.latitude}</td>
-                <td>{company.longitude}</td>
-                <td className="text-center">
-                  <button
-                    className="btn btn-sm btn-outline-primary me-2"
-                    onClick={() => setCompanyToEdit(company)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => setCompanyToDelete(company)}
-                  >
-                    Delete
-                  </button>
+          </thead>
+          <tbody>
+            {companies.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center text-muted py-4">
+                  No companies found.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-      {(openAddCompanyModal || companyToEdit) && (
-        <AddEditCompanyModal
-          company={companyToEdit}
-          onClose={handleCloseModal}
-          onSubmit={handleSave}
-        />
-      )}
-      {companyToDelete && (
-        <DeleteCompanyModal 
-          company={companyToDelete}
-          onClose={handleCloseModal}
-          onConfirm={handleDelete}
-        />
-      )}
+            ) : (
+              companies.map((company) => (
+                <tr key={company.id}>
+                  <td>{company.name}</td>
+                  <td>{company.latitude}</td>
+                  <td>{company.longitude}</td>
+                  <td className="text-center">
+                    <button
+                      className="btn btn-sm btn-outline-primary me-2"
+                      onClick={() => setCompanyToEdit(company)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => setCompanyToDelete(company)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+        {(openAddCompanyModal || companyToEdit) && (
+          <AddEditCompanyModal
+            company={companyToEdit}
+            onClose={handleCloseModal}
+            onSubmit={handleSave}
+          />
+        )}
+        {companyToDelete && (
+          <DeleteCompanyModal 
+            company={companyToDelete}
+            onClose={handleCloseModal}
+            onConfirm={handleDelete}
+          />
+        )}
+      </div>
     </div>
   );
 };

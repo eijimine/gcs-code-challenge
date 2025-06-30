@@ -60,6 +60,10 @@ While it's possible, I thought having all CRUD action capability on the main pag
 
 Improvements:
 
+Pagination + performance:
+Current the table displays ALL companies. If we had 10000 companies then our table would be way too long. I would implement pagination to show 25 or 50 companies at a time and allow users to click to the next page.
+I would also implement some solution for back end pagination / limit as well since querying 100000 companies would be bad for performance on each load. If all company data is absolutly required, maybe consider quyering it once then storing it in cache then serve the cached data.
+
 Better / more error handling:
 I made sure errors were handled (say if you tried saving a number that's outside of the lat or lng), however, given more time I would have made the errors appear in the modals themselves and not on the main page.
 

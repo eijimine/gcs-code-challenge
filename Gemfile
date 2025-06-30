@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
+gem "react_on_rails", "= 14.2"
+gem "shakapacker", "= 8.3"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
@@ -52,7 +54,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "react_on_rails", "= 14.2"
-
-gem "shakapacker", "= 8.3"

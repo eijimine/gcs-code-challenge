@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AddCompanyModal from './AddCompanyModal';
 
 function Companies() {
   const [companies, setCompanies] = useState([]);
+  const [openAddCompanyModal, setOpenAddCompanyModal] = useState(false);
 
   useEffect(() => {
     fetchCompanies();
@@ -12,7 +14,25 @@ function Companies() {
     axios.get('companies/get_companies')
       .then(response => {
         setCompanies(response.data)})
-  };  
+  };
+
+  function handleCloseModal() {
+    setOpenAddCompanyModal(false);
+  }
+
+  const handleCreate = (company) => {
+    axios.post('/companies', {
+      company: {
+        name: company.name,
+        latitude: company.latitude,
+        longitude: company.longitude
+      }
+    })
+    .then(() => {
+      fetchCompanies();
+      handleCloseModal();
+    });
+  };
 
   return (
     <div className="container mt-4">
@@ -20,6 +40,7 @@ function Companies() {
         <h2 className="mb-0">Company List</h2>
         <button
           className="btn btn-primary"
+          onClick={() => setOpenAddCompanyModal(true)}
         >
           Add Company
         </button>
@@ -63,6 +84,12 @@ function Companies() {
           )}
         </tbody>
       </table>
+      {openAddCompanyModal && (
+        <AddCompanyModal
+          onClose={handleCloseModal}
+          onSubmit={handleCreate}
+        />
+      )}
     </div>
   );
 };

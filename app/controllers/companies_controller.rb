@@ -24,7 +24,7 @@ class CompaniesController < ApplicationController
     if @company.update(company_params)
       render json: @company, status: :ok
     else
-      render json: @company.errors, status: :unprocessable_entity
+      render json: { error: @company.errors }, status: :unprocessable_entity
     end
   end
 

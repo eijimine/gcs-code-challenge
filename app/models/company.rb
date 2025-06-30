@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
+  validates :name, presence: true
   validates :latitude, presence: true,
                        numericality: {
                          greater_than_or_equal_to: -90,

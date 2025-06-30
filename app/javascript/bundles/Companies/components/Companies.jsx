@@ -14,6 +14,7 @@ function Companies(props) {
   const [center, setCenter] = useState({ lat: 39.8283, lng: -98.5795 });
   const [radius, setRadius] = useState(0);
   const [companiesInRadius, setCompaniesInRadius] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     fetchCompanies();
@@ -45,7 +46,16 @@ function Companies(props) {
     .then(() => {
       fetchCompanies();
       handleCloseModal();
-    });
+    }).catch((error) => {{
+      if (error.response && error.response.status === 422) {
+        handleCloseModal();
+        const errorMessages = error.response.data.error || {};
+        setErrors(errorMessages);
+        setTimeout(() => {
+          setErrors({});
+        }, 5000);
+      };
+    }});
   };
 
   const handleDelete = (companyId) => {
@@ -137,6 +147,22 @@ function Companies(props) {
           </div>
         </form>
       </div>
+      {Object.keys(errors).length > 0 && (
+        <div className="alert alert-danger mt-3">
+          <ul>
+            {Object.keys(errors).map((field, index) => (
+              <li key={index}>
+                <strong>{field}:</strong>
+                <ul>
+                  {errors[field].map((msg, msgIndex) => (
+                    <li key={msgIndex}>{msg}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="mb-0">Company List</h2>

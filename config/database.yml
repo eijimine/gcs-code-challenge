@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: gcs_code_challenge_production
-  username: gcs_code_challenge
-  password: <%= ENV["GCS_CODE_CHALLENGE_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>

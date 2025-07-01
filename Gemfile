@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem 'cgi', '>= 0.3.3'
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 gem "react_on_rails", "= 14.2"
 gem "shakapacker", "= 8.3"

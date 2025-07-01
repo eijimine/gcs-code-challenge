@@ -45,6 +45,9 @@
 ### 6. Visit
 - http://localhost:3000/companies
 
+### 7. Run Tests
+- bundle exec rspec
+
 ---
 
 **My Challenge Solution**
@@ -55,7 +58,7 @@ Ruby on Rails:
 - Quick and easy implementation of CRUD Api endpoints, validations, database management and testing. Rails has always been great for quickly creating demo apps and proof of conecpts.
 
 React.js / Bootstrap:
-- Easy state management which and allows for a very quick and snappy user experience along with Bootsrap which allowed me to style the front end components without having to create a css file.
+- Easy state management which and allows for a very quick and snappy user experience along with Bootsrap which allowed me to style the front end components without having to create a css file. The trade-offs here are that styling is limited when using only Bootstrap without adding custom css and React files especially in the state management section can get large and messy if not separated into smaller components.
 
 App Design:
 - The design is pretty straight forward: On load you will see a large map os the US spanning across the screen width with pins (with comapny names) placed based on their respective coordinates
@@ -71,7 +74,7 @@ Improvements:
 
 Pagination + performance:
 - Current the table displays ALL companies. If we had 10000 companies then our table would be way too long. I would implement pagination to show 25 or 50 companies at a time and allow users to click to the next page.
-I would also implement some solution for back end pagination / limit as well since querying 100000 companies would be bad for performance on each load. If all company data is absolutly required, maybe consider quyering it once then storing it in cache then serve the cached data.
+I would also implement back end pagination / limit, since querying 100000 companies would be bad for performance on each load. If all company data is absolutly required, maybe consider quyering it once then storing it in cache then serve the cached data.
 
 Better / more error handling:
 - I made sure errors were handled (say if you tried saving a number that's outside of the lat or lng), however, given more time I would have made the errors appear in the modals themselves and not on the main page.

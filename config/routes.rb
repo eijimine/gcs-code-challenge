@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: redirect("/companies")
   resources :companies, only: [ :index, :create, :update, :destroy ] do
     collection do
       get "get_companies"

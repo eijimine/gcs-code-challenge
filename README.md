@@ -3,7 +3,7 @@
 ## Tech Stack Used
 
 ### **Back end**
-- Ruby on Rails (ruby 3.1.0 + rails 7.2.2.1)
+- Ruby on Rails (ruby 3.2.3 + rails 7.2.2.1)
 - Postgres
 - RSpec (testing)
 
@@ -25,8 +25,8 @@
 - cd gcs-code-challenge
 
 ### 2. Set Ruby Version
-- rbenv install 3.1.0
-- rbenv local 3.1.0
+- rbenv install 3.2.3
+- rbenv local 3.2.3
 
 ### 3. Install Dependencies
 - bundle install

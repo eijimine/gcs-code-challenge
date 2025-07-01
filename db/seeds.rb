@@ -512,5 +512,8 @@ companies = [
 ]
 
 companies.each do |company|
-  Company.create!(name: company[:company], latitude: company[:latitude], longitude: company[:longitude])
+  Company.find_or_create_by(name: company[:company]) do |c|
+    c.latitude = company[:latitude]
+    c.longitude = company[:longitude]
+  end
 end

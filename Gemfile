@@ -1,5 +1,6 @@
 source "https://rubygems.org"
-ruby '3.1.0'
+ruby File.read(".ruby-version").strip
+
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'cgi', '>= 0.3.3'

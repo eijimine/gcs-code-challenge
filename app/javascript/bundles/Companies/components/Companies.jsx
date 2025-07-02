@@ -78,10 +78,9 @@ function Companies(props) {
     });
   };
 
-  const setParams = () => {
-    const newCenter = { lat: coordinates.lat, lng: coordinates.lng };
-    const miles = coordinates.rad;
-    const newRadius = miles * 1609.34;
+  const updateFilteredCompanies = (lat, lng, radInMiles) => {
+    const newCenter = { lat, lng };
+    const newRadius = radInMiles * 1609.34;
   
     setCenter(newCenter);
     setRadius(newRadius);
@@ -90,8 +89,22 @@ function Companies(props) {
     setCompaniesInRadius(filtered);
   };
 
-  const companiesToDisplay = radius > 0 ? companiesInRadius : companies;
+  const setParams = () => {
+    const { lat, lng, rad } = coordinates;
+    if (lat && lng && rad) {
+      updateFilteredCompanies(lat, lng, rad);
+    }
+  };
 
+  useEffect(() => {
+    const { lat, lng, rad } = coordinates;
+    if (lat && lng && rad && radius > 0) {
+      updateFilteredCompanies(lat, lng, rad);
+    }
+  }, [companies]);
+
+  const companiesToDisplay = radius > 0 ? companiesInRadius : companies;
+  
   return (
     <div className="container mt-5">
       <h1 className="mb-4 text-center">Companies</h1>
